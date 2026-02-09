@@ -1,0 +1,4 @@
+id,login_url,username,password
+22nKuR3oFrGwk,http://www.esod-neo.com/client_certify_to_logon.php?id=22nKuR3oFrGwk,test_user_001,test_password_001
+SAMPLE_ID_002,http://www.esod-neo.com/client_certify_to_logon.php?id=SAMPLE_ID_002,test_user_002,test_password_002
+SAMPLE_ID_003,http://www.esod-neo.com/client_certify_to_logon.php?id=SAMPLE_ID_003,test_user_003,test_password_003

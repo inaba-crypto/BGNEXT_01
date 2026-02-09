@@ -1,0 +1,21 @@
+{
+  "name": "playwright-seminar-checker",
+  "version": "1.0.0",
+  "description": "セミナーサイト自動巡回システム",
+  "main": "src/checker.js",
+  "scripts": {
+    "start": "node src/checker.js",
+    "test": "node src/checker.js --test"
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "testing"
+  ],
+  "author": "KK Brain Corporation",
+  "license": "MIT",
+  "dependencies": {
+    "csv-parse": "^5.5.3",
+    "playwright": "^1.49.1"
+  }
+}

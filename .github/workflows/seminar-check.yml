@@ -1,0 +1,56 @@
+name: セミナーサイト巡回チェック
+
+on:
+  # スケジュール実行
+  schedule:
+    # 毎日午前10時(JST) = 午前1時(UTC)
+    - cron: '0 1 * * *'
+    # 毎日午後10時(JST) = 午後1時(UTC)  
+    - cron: '0 13 * * *'
+  
+  # 手動実行を許可
+  workflow_dispatch:
+
+jobs:
+  check-sites:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.jsをセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 依存パッケージをインストール
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: サイト巡回チェックを実行
+        env:
+          GOOGLE_SPREADSHEET_ID: 1aFlO3X5mk0ELARP4K8NIJbj99A8zZN06Z0isRGIP_Gw
+          GOOGLE_SHEET_GID: '0'
+        run: npm start
+        
+      - name: 実行ログをアップロード
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: execution-logs-${{ github.run_number }}
+          path: logs/
+          retention-days: 30
+
+      - name: 実行結果をコミット（オプション）
+        if: always()
+        continue-on-error: true
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add logs/ || true
+          git commit -m "Add execution logs for run #${{ github.run_number }}" || true
+          git push || true
