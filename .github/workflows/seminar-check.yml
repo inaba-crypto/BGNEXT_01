@@ -24,11 +24,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: 依存パッケージをインストール
         run: |
-          npm ci
+          npm install
           npx playwright install --with-deps chromium
 
       - name: サイト巡回チェックを実行
