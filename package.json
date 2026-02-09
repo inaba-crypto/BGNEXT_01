@@ -15,7 +15,7 @@
   "author": "KK Brain Corporation",
   "license": "MIT",
   "dependencies": {
-    "playwright": "^1.40.0",
-    "csv-parse": "^5.5.3"
+    "csv-parse": "^5.5.3",
+    "playwright": "^1.49.1"
   }
 }

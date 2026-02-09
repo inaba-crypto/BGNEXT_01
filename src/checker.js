@@ -58,10 +58,15 @@ class SeminarChecker {
   // ブラウザを起動
   async initBrowser() {
     this.logger.info('ブラウザを起動中...');
-    this.browser = await chromium.launch({
+    const launchOptions = {
       headless: CONFIG.headless,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
+    };
+    // 環境変数またはデフォルトパスでChromiumの実行ファイルを指定
+    if (process.env.CHROME_PATH) {
+      launchOptions.executablePath = process.env.CHROME_PATH;
+    }
+    this.browser = await chromium.launch(launchOptions);
     this.logger.success('ブラウザ起動完了');
   }
 
