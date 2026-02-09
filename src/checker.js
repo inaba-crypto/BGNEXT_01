@@ -1,6 +1,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 const { parse } = require('csv-parse/sync');
 const Logger = require('./logger');
 
@@ -28,10 +29,70 @@ class SeminarChecker {
     this.failCount = 0;
   }
 
-  // CSVファイルからサイト情報を読み込み
+  // GoogleスプレッドシートからCSVデータを取得
+  fetchSpreadsheetCSV(spreadsheetId, gid = '0') {
+    const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv&gid=${gid}`;
+    this.logger.info(`Googleスプレッドシートからデータを取得中: ${spreadsheetId}`);
+
+    return new Promise((resolve, reject) => {
+      const request = (targetUrl, redirectCount = 0) => {
+        if (redirectCount > 5) {
+          reject(new Error('Too many redirects'));
+          return;
+        }
+        https.get(targetUrl, (res) => {
+          if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+            request(res.headers.location, redirectCount + 1);
+            return;
+          }
+          if (res.statusCode !== 200) {
+            reject(new Error(`HTTP ${res.statusCode}: スプレッドシートの取得に失敗`));
+            return;
+          }
+          let data = '';
+          res.on('data', (chunk) => { data += chunk; });
+          res.on('end', () => resolve(data));
+          res.on('error', reject);
+        }).on('error', reject);
+      };
+      request(url);
+    });
+  }
+
+  // サイト情報を読み込み（スプレッドシート優先、フォールバックでCSV）
+  async readSites() {
+    const spreadsheetId = process.env.GOOGLE_SPREADSHEET_ID;
+    const gid = process.env.GOOGLE_SHEET_GID || '0';
+
+    let csvContent;
+
+    if (spreadsheetId) {
+      csvContent = await this.fetchSpreadsheetCSV(spreadsheetId, gid);
+      this.logger.success('スプレッドシートからデータを取得しました');
+    } else {
+      const csvPath = path.join(__dirname, '../data/sites.csv');
+      if (!fs.existsSync(csvPath)) {
+        this.logger.error(`CSVファイルが見つかりません: ${csvPath}`);
+        throw new Error('sites.csv not found');
+      }
+      csvContent = fs.readFileSync(csvPath, 'utf-8');
+      this.logger.info('ローカルCSVファイルからデータを読み込みました');
+    }
+
+    const records = parse(csvContent, {
+      columns: true,
+      skip_empty_lines: true,
+      trim: true
+    });
+
+    this.logger.info(`${records.length}サイトの情報を読み込みました`);
+    return records;
+  }
+
+  // 後方互換性のためreadSitesFromCSVを維持
   readSitesFromCSV() {
     const csvPath = path.join(__dirname, '../data/sites.csv');
-    
+
     if (!fs.existsSync(csvPath)) {
       this.logger.error(`CSVファイルが見つかりません: ${csvPath}`);
       throw new Error('sites.csv not found');
@@ -184,7 +245,7 @@ class SeminarChecker {
 
   // 全サイトを巡回
   async checkAllSites() {
-    const sites = this.readSitesFromCSV();
+    const sites = await this.readSites();
     const totalSites = sites.length;
 
     this.logger.info(`全${totalSites}サイトの巡回を開始します`);

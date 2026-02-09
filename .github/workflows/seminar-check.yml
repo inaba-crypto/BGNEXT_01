@@ -32,6 +32,9 @@ jobs:
           npx playwright install --with-deps chromium
 
       - name: サイト巡回チェックを実行
+        env:
+          GOOGLE_SPREADSHEET_ID: 1aFlO3X5mk0ELARP4K8NIJbj99A8zZN06Z0isRGIP_Gw
+          GOOGLE_SHEET_GID: '0'
         run: npm start
         
       - name: 実行ログをアップロード
