@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KOD（研修オンデマンド） | 外国人材受け入れ企業向け</title>
+  <meta name="description" content="外国人材を受け入れている企業・団体向け。KOD（研修オンデマンド）は、ブレーン運用クラウドサービスで新人教育を標準化できる1ID月額3,000円（税別）のサブスクリプションです。" />
+  <style>
+    :root {
+      --primary: #0b4da2;
+      --primary-dark: #073a7a;
+      --accent: #ff5a2c;
+      --bg: #f5f8fc;
+      --text: #222;
+      --muted: #5f6b7a;
+      --card: #fff;
+      --border: #d9e2ef;
+      --max: 1100px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      color: var(--text);
+      line-height: 1.65;
+      background: var(--bg);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), 92%);
+      margin: 0 auto;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      padding: 0.9rem 1.3rem;
+      border-radius: 999px;
+      transition: transform .15s ease, opacity .15s ease;
+      border: 0;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn:hover { opacity: .92; transform: translateY(-1px); }
+
+    .btn.secondary {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,.65);
+    }
+
+    header.hero {
+      color: #fff;
+      background:
+        linear-gradient(120deg, rgba(11, 77, 162, 0.96), rgba(7, 58, 122, 0.95)),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, .18) 0 25%, transparent 26%);
+      padding: 4.5rem 0 3.25rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, .15);
+      border: 1px solid rgba(255, 255, 255, .28);
+      padding: .2rem .7rem;
+      border-radius: 999px;
+      font-size: .86rem;
+      margin-bottom: .9rem;
+    }
+
+    h1 {
+      margin: 0 0 .9rem;
+      font-size: clamp(1.7rem, 4.2vw, 2.8rem);
+      line-height: 1.3;
+    }
+
+    .lead {
+      margin: 0;
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      color: #eaf3ff;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin-top: 1.4rem;
+    }
+
+    .price-card {
+      background: #fff;
+      color: var(--text);
+      padding: 1.2rem;
+      border-radius: 14px;
+      box-shadow: 0 12px 24px rgba(0,0,0,.12);
+    }
+
+    .price-card h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--primary-dark);
+    }
+
+    .price {
+      margin: .25rem 0 .35rem;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .price small {
+      font-size: .9rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    section { padding: 3rem 0; }
+
+    .section-title {
+      margin: 0 0 .4rem;
+      color: var(--primary-dark);
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      line-height: 1.4;
+    }
+
+    .section-sub {
+      margin: 0 0 1.6rem;
+      color: var(--muted);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .card h3 {
+      margin: 0 0 .55rem;
+      color: var(--primary-dark);
+      font-size: 1.05rem;
+    }
+
+    .problem-list,
+    .feature-list,
+    .steps,
+    .faq-list {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+
+    .problem-list li,
+    .feature-list li,
+    .steps li,
+    .faq-list li { margin-bottom: .55rem; }
+
+    .curriculum-table-wrap {
+      overflow-x: auto;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+      background: #fff;
+    }
+
+    th, td {
+      text-align: left;
+      padding: .72rem .8rem;
+      border-bottom: 1px solid #edf1f7;
+      font-size: .95rem;
+    }
+
+    th {
+      background: #f0f5ff;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 1rem;
+    }
+
+    .pricing-box,
+    .notice-box,
+    .cta-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .pricing-box .main {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--primary);
+      font-weight: 800;
+      margin: .4rem 0;
+    }
+
+    .steps {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1rem 1rem 1.8rem;
+    }
+
+    .final-cta {
+      background: linear-gradient(120deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      border-radius: 14px;
+      padding: 1.3rem;
+    }
+
+    .final-cta h3 { margin-top: 0; }
+
+    footer {
+      padding: 1.6rem 0 2.4rem;
+      color: var(--muted);
+      font-size: .9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .cards,
+      .pricing {
+        grid-template-columns: 1fr;
+      }
+
+      header.hero { padding-top: 3.5rem; }
+      section { padding: 2.4rem 0; }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: 94%; }
+      .btn { width: 100%; }
+      .hero-cta { gap: .6rem; }
+      th, td { font-size: .88rem; padding: .62rem .58rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="tag">外国人材受け入れ企業・団体向け</span>
+        <h1>外国人材の新人教育を、<br>クラウドで標準化する。<br>KOD（研修オンデマンド）</h1>
+        <p class="lead">ブレーン運用のクラウドサービスで、新入社員・新人社員向け研修をいつでもどこでも受講。<br>教育品質のばらつきを抑え、担当者の運用負荷を削減します。</p>
+        <div class="hero-cta">
+          <a class="btn" href="#contact">資料をダウンロード</a>
+          <a class="btn secondary" href="#pricing">料金を確認する</a>
+        </div>
+      </div>
+      <aside class="price-card" aria-label="料金の概要">
+        <h2>サブスクリプション料金</h2>
+        <p class="price">1ID 月額 3,000円 <small>（税別）</small></p>
+        <p>必要なID数からご利用可能。<br>クラウド環境はブレーンが運用します。</p>
+        <p style="color:#5f6b7a; margin: .6rem 0 0; font-size:.9rem;">※最低契約ID数・最低利用期間などの詳細はお問い合わせください。</p>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section aria-labelledby="problems">
+      <div class="container">
+        <h2 id="problems" class="section-title">こんなお悩みはありませんか？</h2>
+        <p class="section-sub">外国人材の受け入れ現場で起きやすい教育課題を、KODが解決します。</p>
+        <ul class="problem-list">
+          <li>拠点・担当者ごとに研修内容が違い、教育品質にばらつきが出る。</li>
+          <li>集合研修の準備工数が大きく、現場の負担が重い。</li>
+          <li>シフト勤務や多拠点運用で、同時研修の実施が難しい。</li>
+          <li>新人教育を短期間で立ち上げたいが、仕組み化できていない。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="multilingual-dx">
+      <div class="container">
+        <h2 id="multilingual-dx" class="section-title">多言語版KOD：外国人材を即戦力化する教育DX</h2>
+        <p class="section-sub">添付資料の要点を反映し、現場の課題に対する「3つの壁」と解決、導入推奨ターゲットを明確化しています。</p>
+        <div class="cards">
+          <article class="card">
+            <h3>外国人教育における「3つの壁」と解決</h3>
+            <ul class="feature-list">
+              <li>「なんとなく理解」を母国語字幕で「深い納得」へ。</li>
+              <li>教育の標準化で、店舗・拠点間の指導品質を平準化。</li>
+              <li>24時間いつでも視聴できるオンデマンド形式で継続学習を実現。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>KOD導入による劇的な変化</h3>
+            <ul class="feature-list">
+              <li><strong>理解度：</strong>日本語指示の表面理解から、母国語字幕で思考プロセスまで理解。</li>
+              <li><strong>教育コスト：</strong>教える人による差を減らし、全拠点で教育品質を均一化。</li>
+              <li><strong>定着率：</strong>単純作業化を防ぎ、マインド教育で次世代リーダー候補を育成。</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>導入が推奨される4つの戦略ターゲット</h3>
+            <ul class="feature-list">
+              <li>特定技能外国人を雇用する中堅・大手企業（製造・建設・外食など）</li>
+              <li>都市型小型スーパーなど、外国人比率の高い多店舗展開企業</li>
+              <li>登録支援機関・監理団体など受け入れ支援を担う団体</li>
+              <li>海外拠点を持つ日系企業（本社と現地の認識ギャップ解消）</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="benefits">
+      <div class="container">
+        <h2 id="benefits" class="section-title">KODが選ばれる3つの理由</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>1. 教育の標準化</h3>
+            <p>新入社員向けの必須領域を網羅。全受講者に同じ内容を届けることで、基礎教育の抜け漏れを防ぎます。</p>
+          </article>
+          <article class="card">
+            <h3>2. クラウド運用で省力化</h3>
+            <p>ブレーン運用のクラウドサービスを利用するため、導入・運用がシンプル。担当者の負荷を抑えて継続できます。</p>
+          </article>
+          <article class="card">
+            <h3>3. はじめやすい料金</h3>
+            <p>1ID月額3,000円（税別）のサブスク型。必要人数に応じて段階的に展開できます。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="curriculum">
+      <div class="container">
+        <h2 id="curriculum" class="section-title">新入社員向けカリキュラム（例）</h2>
+        <p class="section-sub">実務で必要な社会人基礎を、短時間で体系的に学べます。</p>
+        <div class="curriculum-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>カテゴリ</th>
+                <th>セミナータイトル</th>
+                <th>時間</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>マインド</td><td>社会人としての心構え</td><td>40分</td></tr>
+              <tr><td>2</td><td>ビジネスマナー</td><td>新入社員向けビジネスマナー</td><td>38分</td></tr>
+              <tr><td>3</td><td>コミュニケーション</td><td>報連相と伝わる話し方の基本</td><td>47分</td></tr>
+              <tr><td>4</td><td>電話応対</td><td>電話応対マナーと実践ポイント</td><td>51分</td></tr>
+              <tr><td>5</td><td>PCスキル</td><td>仕事に役立つExcel・メール基礎</td><td>31分</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" aria-labelledby="pricing-title">
+      <div class="container pricing">
+        <article class="pricing-box">
+          <h2 id="pricing-title" class="section-title" style="margin:0;">料金プラン</h2>
+          <p class="main">1ID 月額 3,000円（税別）</p>
+          <ul class="feature-list">
+            <li>契約形態：サブスクリプション</li>
+            <li>提供環境：ブレーン運用クラウドサービス</li>
+            <li>対象：外国人材を受け入れている企業・団体</li>
+          </ul>
+        </article>
+        <aside class="notice-box">
+          <h3>導入時のご確認事項</h3>
+          <ul class="feature-list">
+            <li>ご利用ID数</li>
+            <li>開始希望時期</li>
+            <li>運用担当者・窓口情報</li>
+            <li>必要に応じた追加サポート範囲</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section aria-labelledby="steps-title">
+      <div class="container">
+        <h2 id="steps-title" class="section-title">ご利用開始までの流れ</h2>
+        <ol class="steps">
+          <li>お問い合わせ・資料請求</li>
+          <li>利用条件の確認（ID数・開始時期）</li>
+          <li>お申し込み・契約</li>
+          <li>アカウント発行後、受講開始</li>
+        </ol>
+      </div>
+    </section>
+
+    <section aria-labelledby="faq-title">
+      <div class="container">
+        <h2 id="faq-title" class="section-title">よくあるご質問</h2>
+        <ul class="faq-list">
+          <li><strong>Q.</strong> 何IDから利用できますか？<br><strong>A.</strong> 最低契約ID数の有無を含め、個別にご案内します。</li>
+          <li><strong>Q.</strong> 受講進捗の確認はできますか？<br><strong>A.</strong> ご要望に応じて運用方法・確認方法をご提案します。</li>
+          <li><strong>Q.</strong> 既存研修との併用は可能ですか？<br><strong>A.</strong> 可能です。集合研修の補完として活用いただけます。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="container final-cta">
+        <h3 id="contact-title">外国人材向け新人教育を、今すぐ仕組み化しませんか？</h3>
+        <p>料金・導入条件・運用方法をまとめた資料をご案内します。</p>
+        <div class="hero-cta">
+          <a class="btn" href="#">資料をダウンロード</a>
+          <a class="btn secondary" href="#">お問い合わせ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 株式会社ブレーン / KOD（研修オンデマンド）</p>
+    </div>
+  </footer>
+</body>
+</html>
